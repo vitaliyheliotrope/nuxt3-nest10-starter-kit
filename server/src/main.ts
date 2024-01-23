@@ -1,12 +1,13 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-// import { NuxtMiddleware } from './nuxt.middleware';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  eval(`import('nuxt')`).then(async ({ loadNuxt }) => {
+    const nuxt = await loadNuxt({ dev: true });
+    console.log(nuxt);
 
-  // app.use(NuxtMiddleware);
-
-  await app.listen(3000);
+    const app = await NestFactory.create(AppModule);
+    await app.listen(3000);
+  });
 }
 bootstrap();
