@@ -1,3 +1,3 @@
 <template>
-  <div>users page</div>
+  <div>nuxt 3 users page</div>
 </template>
