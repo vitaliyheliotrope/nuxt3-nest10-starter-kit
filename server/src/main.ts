@@ -1,19 +1,27 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { exec, execSync } from 'child_process';
+import { exec } from 'child_process';
 
-const isDev = true;
+const isDev = false;
 
 async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+  await app.listen(3001);
+
   if (isDev) {
     exec('npm run dev', { cwd: '..' });
   } else {
-    execSync('rm -rf .output', { cwd: '..' });
-    execSync('npm run build', { cwd: '..' });
-    execSync('npm run start', { cwd: '..' });
+    console.log('started...');
+    exec('rm -rf .output', { cwd: '..' }).addListener('close', () => {
+      console.log('removed output...');
+      exec('npm run build', { cwd: '..' }).addListener('close', () => {
+        console.log('build finished...');
+        exec('npm run start', { cwd: '..' }).addListener('spawn', () => {
+          console.log('nuxt app started...');
+        });
+      });
+    });
   }
-  const app = await NestFactory.create(AppModule);
-  await app.listen(3001);
 }
 
 bootstrap();
