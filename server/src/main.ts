@@ -6,7 +6,7 @@ import { exec } from 'child_process';
 const execAsync = promisify(exec);
 
 // TODO: Value can be taken from env-variable
-const isDev = false;
+const isDev = true;
 
 async function runCommand(command, cwd = '..') {
   try {

@@ -3,9 +3,9 @@ import { Injectable } from '@nestjs/common';
 @Injectable()
 export class AppService {
   getTodos(): string {
-    return 'Todos';
+    return 'Here are your todos';
   }
   getUsers(): string {
-    return 'Users';
+    return 'And here are your users';
   }
 }
